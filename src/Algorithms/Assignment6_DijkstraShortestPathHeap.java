@@ -1,8 +1,10 @@
 package Algorithms;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
-import static Algorithms.tool_readTXTdata.readAdjacentListWithWeight;
+import static Algorithms.tool_readTXTdata.readWeightedAdjacentList;
 
 /**
  * Created by biang on 2017/11/21.
@@ -10,7 +12,7 @@ import static Algorithms.tool_readTXTdata.readAdjacentListWithWeight;
 public class Assignment6_DijkstraShortestPathHeap {
     public static void main(String args[]) {
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment6_data.txt";
-        LinkedList<Integer[]>[] graph = readAdjacentListWithWeight(path);
+        LinkedList<Integer[]>[] graph = readWeightedAdjacentList(path);
         X = new boolean[graph.length];
         for (int i = 0; i < X.length; i++) X[i] = false;
         A = new int[graph.length];

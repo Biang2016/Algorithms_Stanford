@@ -1,6 +1,6 @@
 package Algorithms;
 
-import static Algorithms.tool_readTXTdata.readNumsArray;
+import static Algorithms.tool_readTXTdata.readNumsArrayInt;
 
 /**
  * Created by biang on 2017/11/15.
@@ -12,7 +12,7 @@ public class Assignment2_Inversions {
     public static void main(String[] args) {
 
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment2_data.txt";
-        int[] nums = readNumsArray(path);
+        int[] nums = readNumsArrayInt(path);
         mergeSort(nums);
 //        mergeSort(new int[]{5,4,3,2,1});//test
         System.out.println(InversionCount);

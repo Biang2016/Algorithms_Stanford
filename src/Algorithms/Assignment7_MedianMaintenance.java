@@ -1,6 +1,6 @@
 package Algorithms;
 
-import static Algorithms.tool_readTXTdata.readNumsArray;
+import static Algorithms.tool_readTXTdata.readNumsArrayInt;
 
 /**
  * Created by biang on 2017/11/21.
@@ -8,7 +8,7 @@ import static Algorithms.tool_readTXTdata.readNumsArray;
 public class Assignment7_MedianMaintenance {
     public static void main(String args[]) {
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment7_data.txt";
-        int[] data = readNumsArray(path);
+        int[] data = readNumsArrayInt(path);
 
         BinaryHeapMAX HL = new BinaryHeapMAX();//extract MAX
         BinaryHeapMIN HH = new BinaryHeapMIN();//extract MIN

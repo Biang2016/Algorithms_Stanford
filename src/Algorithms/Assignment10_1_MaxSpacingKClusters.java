@@ -3,8 +3,7 @@ package Algorithms;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static Algorithms.tool_readTXTdata.readBitsOfNodes;
-import static Algorithms.tool_readTXTdata.readEdgesWithCost2;
+import static Algorithms.tool_readTXTdata.readWeightedEdges2;
 
 /**
  * Created by biang on 2017/11/30.
@@ -12,7 +11,7 @@ import static Algorithms.tool_readTXTdata.readEdgesWithCost2;
 public class Assignment10_1_MaxSpacingKClusters {
     public static void main(String args[]) {
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment10-1_data.txt";
-        ArrayList<Integer[]> edges = readEdgesWithCost2(path);
+        ArrayList<Integer[]> edges = readWeightedEdges2(path);
         int n = edges.get(edges.size() - 1)[0];
         edges.remove(edges.size() - 1);
         int k = 4;

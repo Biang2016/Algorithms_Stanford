@@ -1,6 +1,6 @@
 package Algorithms;
 
-import static Algorithms.tool_readTXTdata.readNumsArray;
+import static Algorithms.tool_readTXTdata.readNumsArrayInt;
 
 /**
  * Created by biang on 2017/11/16.
@@ -10,7 +10,7 @@ public class Assignment3_QuickSort {
     public static void main(String[] args) {
 
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment3_data.txt";
-        int[] nums = readNumsArray(path);
+        int[] nums = readNumsArrayInt(path);
 //        quickSortByFirstPivot(nums);
 //        quickSortByLastPivot(nums);
         quickSortByMedianPivot(nums);

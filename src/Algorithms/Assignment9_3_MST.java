@@ -2,7 +2,7 @@ package Algorithms;
 
 import java.util.LinkedList;
 
-import static Algorithms.tool_readTXTdata.readEdgesWithCost;
+import static Algorithms.tool_readTXTdata.readWeightedEdges;
 
 /**
  * Created by biang on 2017/11/30.
@@ -10,7 +10,7 @@ import static Algorithms.tool_readTXTdata.readEdgesWithCost;
 public class Assignment9_3_MST {
     public static void main(String args[]) {
         String path = "/Users/biang/Documents/在线课程/Algorithms Stanford/assignment9-3_data.txt";
-        LinkedList<Integer[]>[] graph = readEdgesWithCost(path);
+        LinkedList<Integer[]>[] graph = readWeightedEdges(path);
         X = new boolean[graph.length];
         for (int i = 0; i < X.length; i++) X[i] = false;
         System.out.println(PrimsMST(graph, 0));

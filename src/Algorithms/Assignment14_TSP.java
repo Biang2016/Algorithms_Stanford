@@ -1,11 +1,7 @@
 package Algorithms;
 
-import javax.lang.model.type.ErrorType;
-
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 
 import static Algorithms.tool_readTXTdata.readPlaces;
@@ -33,20 +29,26 @@ public class Assignment14_TSP {
     private static double TSP(double[][] places) {
         int nplaces = places.length;
         int sizeS = (int) Math.pow(2, nplaces - 1);
-        HashMap<Integer, double[]> A = new HashMap<>();
+
+        //减少内存占用的核心思想：每次m++的时候换一张哈希表，如果一直使用一张哈希表的话，即使remove了一些元素，实质上其内部的array是不会remove的，也就是说其size并不会变小
+        //但如果换一张哈希表的话，在每次循环结束后，自动回收不用的A_Last这张不用的表，还不用写回收代码
+        HashMap<Integer, double[]> A_Last = new HashMap<>();
+        HashMap<Integer, double[]> A_New;
 
         double[] column = new double[nplaces];
         column[0] = 0d;
-        A.put(0, column);
+        A_Last.put(0, column);
 
-//        for (double[] a : A) Arrays.fill(a, Double.MAX_VALUE);
 
         for (int m = 1; m <= nplaces - 1; m++) {
+            A_New = new HashMap<>();
+
             System.out.println("m= " + m);
             long time2 = System.nanoTime();
             System.out.println((time2 - time1) / 1000000 + "ms");
 
             LinkedList<Integer> mSize_S_Set = nbitOnesInts(m, sizeS);//具有m-1个1的int数，总位数nplaces - 1
+            System.out.println("mSize_S_Set: " + mSize_S_Set.size());
             for (Integer s : mSize_S_Set) {
                 LinkedList<Integer> onesPlaces = bitOnePlace(s, nplaces - 1);
                 for (int jj = 0; jj < onesPlaces.size(); jj++) {
@@ -55,36 +57,31 @@ public class Assignment14_TSP {
                     for (int kk = 0; kk < onesPlaces.size(); kk++) {
                         if (kk == jj) continue;
                         int k = onesPlaces.get(kk) + 1;
-                        shortestHop = Math.min(shortestHop, A.get(s - (1 << (nplaces - 1 - j)))[k] + disMatrix[k][j]);
+                        shortestHop = Math.min(shortestHop, A_Last.get(s - (1 << (nplaces - 1 - j)))[k] + disMatrix[k][j]);
                     }
-                    shortestHop = Math.min(shortestHop, A.get(s - (1 << (nplaces - 1 - j)))[0] + disMatrix[0][j]);
+                    shortestHop = Math.min(shortestHop, A_Last.get(s - (1 << (nplaces - 1 - j)))[0] + disMatrix[0][j]);
 
-                    if (A.containsKey(s)) {
-                        double[] cc = A.get(s);
+                    if (A_New.containsKey(s)) {
+                        double[] cc = A_New.get(s);
                         cc[j] = shortestHop;
-                        A.remove(s);
-                        A.put(s, cc);
+                        A_New.remove(s);
+                        A_New.put(s, cc);
                     } else {
                         double[] cc = new double[nplaces];
                         Arrays.fill(cc, Double.MAX_VALUE);
                         cc[j] = shortestHop;
-                        A.put(s, cc);
+                        A_New.put(s, cc);
                     }
                 }
             }
 
-            //释放不必要的存储
-            if (m >= 2) {
-                LinkedList<Integer> m_2_Size_S_Set = nbitOnesInts(m - 2, nplaces - 1);
-                for (Integer s : m_2_Size_S_Set) {
-                    A.remove(s);
-                }
-            }
+            A_Last = A_New;
+            System.out.println("HashSize: " + A_Last.size());
         }
 
         double shortestPath = Double.MAX_VALUE;
         for (int j = 1; j < nplaces; j++) {
-            shortestPath = Math.min(shortestPath, A.get(sizeS - 1)[j] + disMatrix[j][0]);
+            shortestPath = Math.min(shortestPath, A_Last.get(sizeS - 1)[j] + disMatrix[j][0]);
         }
 
         return shortestPath;
@@ -127,4 +124,7 @@ public class Assignment14_TSP {
         double dis = Math.sqrt(Math.pow(places[place_A][0] - places[place_B][0], 2) + Math.pow(places[place_A][1] - places[place_B][1], 2));
         return dis;
     }
+
+
+
 }
